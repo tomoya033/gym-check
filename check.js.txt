@@ -1,0 +1,26 @@
+const axios = require('axios');
+
+async function sendLine(message) {
+  const token = process.env.LINE_TOKEN;
+  const userId = process.env.LINE_USER_ID;
+
+  await axios.post(
+    'https://api.line.me/v2/bot/message/push',
+    {
+      to: userId,
+      messages: [{ type: 'text', text: message }]
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      }
+    }
+  );
+}
+
+async function main() {
+  await sendLine('GitHub動作テスト成功');
+}
+
+main();
